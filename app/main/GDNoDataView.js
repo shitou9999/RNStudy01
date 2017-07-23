@@ -1,0 +1,33 @@
+/**
+ * Created by PVer on 2017/7/23.
+ */
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    View,
+    Text,
+} from 'react-native';
+
+export default class GDNoDataView extends Component {
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.textStyle}>暂无数据</Text>
+            </View>
+        );
+
+    }
+
+}
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        textStyle: {
+            fontSize: 21,
+            color: 'gray',
+        },
+    });
