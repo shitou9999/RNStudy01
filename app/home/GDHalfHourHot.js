@@ -1,5 +1,5 @@
 /**
- * Created by PVer on 2017/7/21
+ * Created by PVer on 2017/7/21。
  * import TabNavigator from 'react-native-tab-navigator';
  */
 
