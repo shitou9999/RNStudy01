@@ -20,7 +20,9 @@ import {PullList} from 'react-native-pull';
 //导航栏的外部文件 .返回上一级
 import CommunalNavBar from '../main/GDCommunalNavBar';
 import CommunalHotCell from '../main/GDCommunalHotCell';
+import CommunalDetail from '../main/GDCommunalDetail';
 import NoDataView from '../main/GDNoDataView';
+import HTTPBase from '../http/HTTPBase';
 
 //近半小时热门界面
 export default class GDHalfHourHot extends Component {
@@ -36,6 +38,10 @@ export default class GDHalfHourHot extends Component {
         // 绑定
         this.fetchData = this.fetchData.bind(this);
     }
+
+    static defaultProps = {
+        removeModal:{}      // 销毁模态回调
+    };
 
     //发送隐藏通知
     componentWillMount(){
@@ -57,16 +63,17 @@ export default class GDHalfHourHot extends Component {
     renderRightItem() {
         return(
             <TouchableOpacity
-                onPress={()=>{this.popToHome()}}
+                onPress={()=>{this.popToHome(false)}}  // onPress={()=>{this.popToHome()}}
             >
                 <Text style={styles.navbarRightItemStyle}>关闭</Text>
             </TouchableOpacity>
         );
     }
-
-    popToHome() {
+    //模态的方式把一段代码发送出去
+    popToHome(data) {
         //获取导航控制器
-        this.props.navigator.pop();
+        // this.props.navigator.pop();
+        this.props.removeModal(data);
     }
 
     //1. 组件加载完成
@@ -78,8 +85,7 @@ export default class GDHalfHourHot extends Component {
     //2. 等到请求成功，再用 this.setState 方法重新渲染UI
     fetchData(resolve) {
         setTimeout(() =>{
-            fetch('http://guangdiu.com/api/gethots.php')
-                .then((response) => response.json()) // json方式解析，如果是text就是 response.text()
+            HTTPBase.get('http://guangdiu.com/api/gethots.php')
                 .then((responseData) => {  // 获取到的数据处理
                     this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(responseData.data),
@@ -99,11 +105,25 @@ export default class GDHalfHourHot extends Component {
     // 返回每一行cell的样式
     renderRow(rowData) {
         return(
-            <CommunalHotCell
-                image={rowData.image}
-                title={rowData.title}
-            />
+            <TouchableOpacity
+                onPress={() => this.pushToDetail(rowData.id)}
+            >
+                <CommunalHotCell
+                    image={rowData.image}
+                    title={rowData.title}
+                />
+            </TouchableOpacity>
         );
+    }
+
+    // 跳转到详情页
+    pushToDetail(value) {
+        this.props.navigator.push({
+            component: CommunalDetail,
+            params: {
+                url: 'https://guangdiu.com/api/showdetail.php' + '?' + 'id=' + value
+            }
+        });
     }
 
     //返回listview头部
@@ -126,10 +146,10 @@ export default class GDHalfHourHot extends Component {
                 <PullList
                     onPullRelease={(resolve) =>this.fetchData(resolve)}   // 下拉刷新操作
                     dataSource={this.state.dataSource}    // 设置数据源
-                    renderRow={this.renderRow}         // 根据数据创建相应 cell
+                    renderRow={this.renderRow.bind(this)}         // 根据数据创建相应 cell
                     showsHorizontalScrollIndicator={false}   // 隐藏水平指示器
                     style={styles.listViewStyle}
-                    initialListSize={7}    // 优化:一次渲染几条数据
+                    initialListSize={5}    // 优化:一次渲染几条数据
                     renderHeader={this.renderHeader}  // 设置头部视图
                 />
             );

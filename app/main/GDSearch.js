@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 //导航栏的外部文件
-import CommunalNavBar from '../main/GDCommunalNavBar';
+import CommunalNavBar from './GDCommunalNavBar';
 //搜索界面
 export default class GDSearch extends Component {
 

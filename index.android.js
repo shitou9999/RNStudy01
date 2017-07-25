@@ -10,13 +10,27 @@ import {
 } from 'react-native';
 
 //引用外部文件
-import Main from './app/main/GDMain';
+// import Main from './app/main/GDMain';
+import LaunchPage from './app/main/GDLaunchPage';
+import { Navigator } from 'react-native-deprecated-custom-components';
+
 
 export default class RNStudy extends Component {
   render() {
     return (
 
-        <Main />
+        <Navigator
+            initialRoute={{
+                name:'LaunchPage',
+                component:LaunchPage
+            }}
+
+            renderScene={(route,navigator) => {
+                let Component = route.component;
+                return <Component {...route.param} navigator={navigator}/>
+            }}
+
+        />
 
     );
   }
