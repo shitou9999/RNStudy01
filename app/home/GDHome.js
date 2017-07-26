@@ -71,7 +71,7 @@ export default class GDHome extends Component {
     }
 
     showID(){
-        AsyncStorage.getItem('lastID')
+        AsyncStorage.getItem('cnlastID')
             .then((value) =>{
                 alert(value);
             })
@@ -118,6 +118,9 @@ export default class GDHome extends Component {
         let params = {'count': 10};
         HTTPBase.get('https://guangdiu.com/api/getlist.php', params)
             .then((responseData) => {
+                //清空数据
+                this.data = [];
+
                 //拼接数据
                 this.data = this.data.concat(responseData.data);
                 //重新渲染
@@ -132,8 +135,11 @@ export default class GDHome extends Component {
                     }, 1000);
                 }
                 //存储数组中最后一个元素的id  responseData.data是个数组
-                let lastID = responseData.data[responseData.data.length - 1].id;
-                AsyncStorage.setItem('lastID', lastID.toString());
+                let cnlastID = responseData.data[responseData.data.length - 1].id;
+                AsyncStorage.setItem('cnlastID', cnlastID.toString());
+                //存储数组中第一个元素的id
+                let cnfirstID = responseData.data[0].id;
+                AsyncStorage.setItem('cnfirstID', cnfirstID.toString());
 
             })
             .catch((error) => {
@@ -194,7 +200,7 @@ export default class GDHome extends Component {
 
     // 加载更多数据操作
     loadMore() {
-        AsyncStorage.getItem('lastID')
+        AsyncStorage.getItem('cnlastID')
             .then((value) => {
                 // 加载更多数据
                 this.loadMoreData(value);
@@ -220,9 +226,9 @@ export default class GDHome extends Component {
                     loaded:true,
                 });
                 //存储数组中最后一个元素的id  responseData.data是个数组
-                let lastID = responseData.data[responseData.data.length - 1].id;
+                let cnlastID = responseData.data[responseData.data.length - 1].id;
                 console.log(responseData.data);
-                AsyncStorage.setItem('lastID', lastID.toString());
+                AsyncStorage.setItem('cnlastID', cnlastID.toString());
             })
             .catch((error) => {
                 // 网络等问题处理
