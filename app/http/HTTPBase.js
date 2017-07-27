@@ -122,5 +122,5 @@ HTTPBase.post = function (url, params, headers) {
 //     });
 // }
 
-module.exports  = HTTPBase;
-// global.HTTPBase = HTTPBase;
+// module.exports  = HTTPBase; //输出一个接口，每个地方都需要引用
+global.HTTPBase = HTTPBase;  //引入一次，home前面用到就引用

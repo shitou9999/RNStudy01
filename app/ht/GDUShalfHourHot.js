@@ -25,7 +25,7 @@ import CommunalNavBar from '../main/GDCommunalNavBar';
 import CommunalHotCell from '../main/GDCommunalHotCell';
 import CommunalDetail from '../main/GDCommunalDetail';
 import NoDataView from '../main/GDNoDataView';
-import HTTPBase from '../http/HTTPBase';
+// import HTTPBase from '../http/HTTPBase';
 
 //界面
 export default class GDUShalfHourHot extends Component {

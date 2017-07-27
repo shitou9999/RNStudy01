@@ -26,7 +26,7 @@ import Search from '../main/GDSearch';
 import NoDataView from '../main/GDNoDataView';
 import CommunalHotCell from '../main/GDCommunalHotCell';
 import CommunalDetail from '../main/GDCommunalDetail';
-import HTTPBase from '../http/HTTPBase';
+// import HTTPBase from '../http/HTTPBase';
 
 
 //海淘界面

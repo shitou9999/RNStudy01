@@ -26,7 +26,8 @@ import Search from '../main/GDSearch';
 import NoDataView from '../main/GDNoDataView';
 import CommunalHotCell from '../main/GDCommunalHotCell';
 import CommunalDetail from '../main/GDCommunalDetail';
-import HTTPBase from '../http/HTTPBase';
+// import HTTPBase from '../http/HTTPBase';
+import RealmStorage from '../storage/realmStorage';
 
 //主界面
 export default class GDHome extends Component {
@@ -62,9 +63,9 @@ export default class GDHome extends Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                this.showID();
-            }}
-                >
+                    this.showID();
+                }}
+            >
                 <Image source={{uri: 'navtitle_home_down_66x20'}} style={styles.navbarTitleItemStyle}/>
             </TouchableOpacity>
         );
@@ -148,7 +149,7 @@ export default class GDHome extends Component {
     }
 
     // 3.根据网络状态决定是否渲染 listview
-    renderListView() {
+       renderListView() {
         if (this.state.loaded === false) {
             return (
                 <NoDataView />
@@ -229,9 +230,12 @@ export default class GDHome extends Component {
                 let cnlastID = responseData.data[responseData.data.length - 1].id;
                 console.log(responseData.data);
                 AsyncStorage.setItem('cnlastID', cnlastID.toString());
+
+
             })
             .catch((error) => {
                 // 网络等问题处理
+                //拿到本地存储的数据，展示出来，没有数据显示无数据页面
             })
     }
 

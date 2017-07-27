@@ -22,7 +22,7 @@ import CommunalNavBar from '../main/GDCommunalNavBar';
 import CommunalHotCell from '../main/GDCommunalHotCell';
 import CommunalDetail from '../main/GDCommunalDetail';
 import NoDataView from '../main/GDNoDataView';
-import HTTPBase from '../http/HTTPBase';
+// import HTTPBase from '../http/HTTPBase';
 
 //近半小时热门界面
 export default class GDHalfHourHot extends Component {

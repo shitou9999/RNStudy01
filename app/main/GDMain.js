@@ -20,7 +20,7 @@ import Home from '../home/GDHome';
 import HT from '../ht/GDHt';
 import HourList from '../hourList/GDHourList';
 //引入
-import HTTPBase from '../http/HTTPBase';
+import HTTP from '../http/HTTPBase';
 
 
 export default class GDMain extends Component {
